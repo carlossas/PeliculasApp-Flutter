@@ -74,4 +74,12 @@ class Pelicula {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
   }
+
+  String obtenerBackgroundImg() {
+    if (backdropPath == null) {
+      return 'http://www.confidentonline.com/uploads/1921562513no%20image.jpg';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    }
+  }
 }
