@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
  * Servicio de tarjetas
  */
 import 'package:peliculas/src/providers/peliculas_providers.dart';
+/**
+ * Clase que se encarga de las busquedas
+ */
+import 'package:peliculas/src/search/search_delegate.dart';
 
 /**
  * Widgets personalizados
@@ -23,13 +27,19 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Peliculas en cines"),
-        centerTitle: false,
+        title: Text("Películas App"),
+        centerTitle: true,
         backgroundColor: Colors.indigoAccent,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: DataSearch(),
+                // query: 'Lo que aparece al principio en el search',
+              );
+            },
           ),
         ],
       ),
@@ -72,11 +82,11 @@ class HomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: 20.0),
-            child:
-                Text("Populares", style: Theme.of(context).textTheme.subhead),
-          ),
+          // Container(
+          //   padding: EdgeInsets.only(left: 20.0),
+          //   child:
+          //       Text("Populares", style: Theme.of(context).textTheme.subhead),
+          // ),
           SizedBox(height: 5.0),
           StreamBuilder(
             stream: peliculasProvider.popularesStream,

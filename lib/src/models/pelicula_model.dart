@@ -18,6 +18,12 @@ class Peliculas {
 }
 
 class Pelicula {
+  /**
+   * Este uniqueHeroId se usa unicamente para generar un id que no se repita y sea usado
+   * en la animacion HeroAnimation
+   */
+  String uniqueHeroId;
+
   int voteCount;
   int id;
   bool video;

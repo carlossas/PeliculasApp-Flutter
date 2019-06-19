@@ -5,6 +5,9 @@ import 'dart:async';
 //Modulo htttp Dart
 import 'package:http/http.dart' as http;
 
+//Modelo/Clase de los actores
+import 'package:peliculas/src/models/actores_model.dart';
+
 //Modelo/Clase de las peliculas
 import 'package:peliculas/src/models/pelicula_model.dart';
 
@@ -92,5 +95,39 @@ class PeliculasProvider {
 
     _cargando = false;
     return res;
+  }
+
+  /**
+   * Obtiene el arreglo de actores de una pelicula por ID
+   */
+  Future<List<Actor>> obtenerActores(String id_pelicula) async {
+    final url = Uri.https(_url, '3/movie/$id_pelicula/credits', {
+      'api_key': _apikey,
+      'language': _lenguage,
+    });
+
+    //Json raw string
+    final res = await http.get(url);
+
+    //Objeto/Mapa del json
+    final decodedData = json.decode(res.body);
+
+    final cast = new Cast.fromJsonList(decodedData['cast']);
+
+    return cast.actores;
+  }
+
+  /**
+ * Obtiene las un arreglo de peliculas que concidan con el query que manda el 
+ * usuario en el buscador
+ */
+  Future<List<Pelicula>> buscarPelicula(String query) async {
+    final url = Uri.https(_url, '3/search/movie', {
+      'api_key': _apikey,
+      'language': _lenguage,
+      'query': query,
+    });
+
+    return await _procesarRespuesta(url);
   }
 }
