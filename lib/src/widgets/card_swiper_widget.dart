@@ -20,12 +20,26 @@ class CardSwiper extends StatelessWidget {
         itemWidth: _screenSize.width * 0.7,
         itemHeight: _screenSize.height * 0.5,
         itemBuilder: (BuildContext context, int index) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              image: NetworkImage(peliculas[index].obtenerPoster()),
-              placeholder: AssetImage('assets/img/jar-loading.gif'),
-              fit: BoxFit.cover,
+          /**
+         * Este uniqueHeroId se usa unicamente para generar un id que no se repita y sea usado
+         * en la animacion HeroAnimation el tag "-tarjeta" distingue el id de las peliculas en el footer
+         */
+          peliculas[index].uniqueHeroId = "${peliculas[index].id}-tarjeta";
+          return Hero(
+            tag: peliculas[index].uniqueHeroId,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'detalle',
+                      arguments: peliculas[index]);
+                },
+                child: FadeInImage(
+                  image: NetworkImage(peliculas[index].obtenerPoster()),
+                  placeholder: AssetImage('assets/img/jar-loading.gif'),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           );
         },
